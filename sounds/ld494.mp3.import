@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ld494.mp3-6fb386f707ffa0171155bb3ced41c93c.mp3str"
+
+[deps]
+
+source_file="res://sounds/ld494.mp3"
+dest_files=[ "res://.import/ld494.mp3-6fb386f707ffa0171155bb3ced41c93c.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

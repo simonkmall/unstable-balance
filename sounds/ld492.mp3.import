@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ld492.mp3-f2d10a3c81f8ca316a33624d3dbf2205.mp3str"
+
+[deps]
+
+source_file="res://sounds/ld492.mp3"
+dest_files=[ "res://.import/ld492.mp3-f2d10a3c81f8ca316a33624d3dbf2205.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

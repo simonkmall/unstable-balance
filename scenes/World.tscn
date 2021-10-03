@@ -1,0 +1,196 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://ressources/PottaOne-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://sprites/bg.png" type="Texture" id=2]
+[ext_resource path="res://sprites/triangle.png" type="Texture" id=3]
+[ext_resource path="res://sounds/ld491.mp3" type="AudioStream" id=4]
+[ext_resource path="res://scenes/World.gd" type="Script" id=5]
+[ext_resource path="res://ressources/font24.tres" type="DynamicFont" id=6]
+[ext_resource path="res://sounds/ld492.mp3" type="AudioStream" id=7]
+[ext_resource path="res://sounds/blip.wav" type="AudioStream" id=8]
+[ext_resource path="res://sounds/ld493.mp3" type="AudioStream" id=9]
+[ext_resource path="res://sounds/ld494.mp3" type="AudioStream" id=10]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.501961, 0.117647, 0.0588235, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.623529, 0.262745, 0.0705882, 1 )
+border_color = Color( 0.796078, 0.72549, 0.0901961, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.352941, 0.0313726, 0.054902, 1 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 48
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 72
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 18
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 41.8856, 22.2903 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 941.86, 103.346 )
+
+[sub_resource type="Environment" id=8]
+background_mode = 4
+glow_enabled = true
+glow_strength = 1.11
+glow_bloom = 0.22
+
+[node name="World" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -74.5
+margin_top = 42.0
+margin_right = 74.5
+margin_bottom = 96.0
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0.796078, 0.72549, 0.0901961, 1 )
+text = "Release"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CountLabel" type="Label" parent="CanvasLayer"]
+margin_left = 462.527
+margin_top = 125.4
+margin_right = 562.527
+margin_bottom = 195.4
+rect_min_size = Vector2( 100, 0 )
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color = Color( 0.501961, 0.117647, 0.0588235, 1 )
+text = "00"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CountdownLabel" type="Label" parent="CanvasLayer"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -245.582
+margin_top = 38.264
+margin_right = 254.418
+margin_bottom = 143.264
+rect_min_size = Vector2( 500, 0 )
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0.796078, 0.72549, 0.0901961, 1 )
+text = "5"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RelLabel3" type="Label" parent="CanvasLayer"]
+margin_left = 361.883
+margin_top = 111.723
+margin_right = 664.883
+margin_bottom = 168.723
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 0.729412, 0.439216, 0.0823529, 1 )
+text = "Win Streak"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Instructions" type="Control" parent="CanvasLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RelLabel2" type="Label" parent="CanvasLayer/Instructions"]
+margin_left = 376.181
+margin_top = 363.453
+margin_right = 679.181
+margin_bottom = 420.453
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 0.729412, 0.439216, 0.0823529, 1 )
+text = "1. Drag balls with mouse
+2. Press \"Release\" when ready"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Bock" type="StaticBody2D" parent="."]
+position = Vector2( 512, 578.514 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bock"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Bock"]
+texture = ExtResource( 3 )
+
+[node name="Left" type="Position2D" parent="."]
+position = Vector2( 90, 220.28 )
+
+[node name="MiddleLeft" type="Position2D" parent="."]
+position = Vector2( 369.176, 220.279 )
+
+[node name="MiddleRight" type="Position2D" parent="."]
+position = Vector2( 641.458, 220.279 )
+
+[node name="Right" type="Position2D" parent="."]
+position = Vector2( 930, 220.28 )
+
+[node name="LattenDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LattenDetector"]
+position = Vector2( 519.131, 732.446 )
+shape = SubResource( 5 )
+
+[node name="Countdown" type="Timer" parent="."]
+
+[node name="Music1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="Music2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="Music3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
+[node name="Music4" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="TextTween" type="Tween" parent="."]
+
+[node name="Blip" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 8 )
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_Button_pressed"]
+[connection signal="body_entered" from="LattenDetector" to="." method="_on_LattenDetector_body_entered"]
+[connection signal="timeout" from="Countdown" to="." method="_on_Countdown_timeout"]
