@@ -16,6 +16,7 @@ var current_music = 0
 
 var countdown = 5
 var countdown_running = false
+var winning = false
 
 func _ready():
 	randomize()
@@ -25,6 +26,7 @@ func _ready():
 	music_player[current_music].play()
 	
 func generate():
+	winning = false
 	countdown = 5
 	countdown_running = false
 	remove_all_balls()
@@ -49,7 +51,7 @@ func remove_all_balls():
 func add_ball(pos, is_left):
 	var newb = ball_scene.instance()
 	newb.position = pos
-	newb.set_size(rand_range(0.1, 1.0))
+	newb.set_size(rand_range(0.2, 0.9))
 	newb.is_left = is_left
 	add_child(newb)
 	return newb
@@ -76,7 +78,7 @@ func _on_Button_pressed():
 	$CanvasLayer/Instructions.visible = false
 
 func _on_LattenDetector_body_entered(body):
-	if body.is_in_group("latte"):
+	if body.is_in_group("latte") and not winning:
 		GameEvents.emit_signal("fell_down")
 		$Countdown.stop()
 		$CanvasLayer/CountdownLabel.visible = false
@@ -97,11 +99,17 @@ func _on_Countdown_timeout():
 	countdown -= 1
 	$CanvasLayer/CountdownLabel.text  = "%d" % [countdown]
 	if countdown == 0:
+		winning = true
 		$Countdown.stop()
 		$CanvasLayer/CountdownLabel.visible = false
 		points += 1
 		$CanvasLayer/CountLabel.text = "%02d" % [points]
+		$PointTextTween.interpolate_property($CanvasLayer/CountLabel, "custom_colors/font_color", Color("cbb917"), Color("801e0f"), 2.0, Tween.TRANS_EXPO, Tween.EASE_OUT)
+		$PointTextTween.start()
+		$Particles2D.restart()
+		$Coin.play()
 		show_text("Well Done!")
+		yield($TextTween, "tween_all_completed")
 		generate()
 
 func _on_touched_latte():
@@ -117,6 +125,6 @@ func show_text(text_string):
 	$CanvasLayer/CountdownLabel.visible = false
 	$CanvasLayer/CountdownLabel.text = text_string
 	$CanvasLayer/CountdownLabel.visible = true
-	$TextTween.interpolate_property($CanvasLayer/CountdownLabel, "modulate", null, Color(1.0, 1.0, 1.0, 0.0), 1.0, Tween.TRANS_EXPO, Tween.EASE_IN)
+	$TextTween.interpolate_property($CanvasLayer/CountdownLabel, "modulate", null, Color(1.0, 1.0, 1.0, 0.0), 2.0, Tween.TRANS_EXPO, Tween.EASE_IN)
 	$TextTween.start()
 	

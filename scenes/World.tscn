@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://ressources/PottaOne-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://sprites/bg.png" type="Texture" id=2]
@@ -10,16 +10,20 @@
 [ext_resource path="res://sounds/blip.wav" type="AudioStream" id=8]
 [ext_resource path="res://sounds/ld493.mp3" type="AudioStream" id=9]
 [ext_resource path="res://sounds/ld494.mp3" type="AudioStream" id=10]
+[ext_resource path="res://scenes/ScreenShaker.tscn" type="PackedScene" id=11]
+[ext_resource path="res://sounds/coin.wav" type="AudioStream" id=12]
 
 [sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0.501961, 0.117647, 0.0588235, 1 )
+bg_color = Color( 0.623529, 0.262745, 0.0705882, 1 )
 
 [sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.623529, 0.262745, 0.0705882, 1 )
-border_color = Color( 0.796078, 0.72549, 0.0901961, 1 )
+bg_color = Color( 0.729412, 0.439216, 0.0823529, 1 )
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0.501961, 0.117647, 0.0588235, 1 )
 
 [sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.352941, 0.0313726, 0.054902, 1 )
+bg_color = Color( 0.501961, 0.117647, 0.0588235, 1 )
 
 [sub_resource type="DynamicFont" id=6]
 size = 48
@@ -36,6 +40,25 @@ size = 18
 use_filter = true
 font_data = ExtResource( 1 )
 
+[sub_resource type="Gradient" id=10]
+offsets = PoolRealArray( 0, 0.639752, 1 )
+colors = PoolColorArray( 0.796078, 0.72549, 0.0901961, 1, 0.796078, 0.72549, 0.0901961, 1, 0.796078, 0.72549, 0.0901961, 0 )
+
+[sub_resource type="GradientTexture" id=11]
+gradient = SubResource( 10 )
+
+[sub_resource type="ParticlesMaterial" id=12]
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 180.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 98.9
+initial_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 2.0
+color_ramp = SubResource( 11 )
+
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 41.8856, 22.2903 )
 
@@ -44,6 +67,7 @@ extents = Vector2( 941.86, 103.346 )
 
 [sub_resource type="Environment" id=8]
 background_mode = 4
+tonemap_mode = 2
 glow_enabled = true
 glow_strength = 1.11
 glow_bloom = 0.22
@@ -56,15 +80,21 @@ script = ExtResource( 5 )
 [node name="Button" type="Button" parent="CanvasLayer"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -74.5
+margin_left = -73.2401
 margin_top = 42.0
-margin_right = 74.5
+margin_right = 75.7599
 margin_bottom = 96.0
+focus_mode = 0
 custom_styles/hover = SubResource( 2 )
 custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 13 )
 custom_styles/normal = SubResource( 4 )
 custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color_disabled = Color( 0.796078, 0.72549, 0.0901961, 1 )
 custom_colors/font_color = Color( 0.796078, 0.72549, 0.0901961, 1 )
+custom_colors/font_color_hover = Color( 0.796078, 0.72549, 0.0901961, 1 )
+custom_colors/font_color_pressed = Color( 0.796078, 0.72549, 0.0901961, 1 )
+enabled_focus_mode = 0
 text = "Release"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -137,8 +167,29 @@ __meta__ = {
 }
 
 [node name="Background" type="Sprite" parent="."]
+position = Vector2( -50.4539, -25.2269 )
+scale = Vector2( 1.1, 1.1 )
 texture = ExtResource( 2 )
 centered = false
+
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( 514.774, 162.635 )
+emitting = false
+amount = 50
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 12 )
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PoolVector2Array( 90, 220, 370, 220 )
+width = 3.0
+default_color = Color( 0.352941, 0.0313726, 0.054902, 1 )
+
+[node name="Line2D2" type="Line2D" parent="."]
+points = PoolVector2Array( 641, 220, 930, 220 )
+width = 3.0
+default_color = Color( 0.352941, 0.0313726, 0.054902, 1 )
 
 [node name="Bock" type="StaticBody2D" parent="."]
 position = Vector2( 512, 578.514 )
@@ -185,11 +236,25 @@ stream = ExtResource( 10 )
 
 [node name="TextTween" type="Tween" parent="."]
 
+[node name="PointTextTween" type="Tween" parent="."]
+
 [node name="Blip" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 8 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+limit_left = 0
+limit_top = 0
+limit_right = 1024
+limit_bottom = 600
+
+[node name="ScreenShaker" parent="Camera2D" instance=ExtResource( 11 )]
+
+[node name="Coin" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_Button_pressed"]
 [connection signal="body_entered" from="LattenDetector" to="." method="_on_LattenDetector_body_entered"]

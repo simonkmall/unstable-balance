@@ -6,11 +6,17 @@ var dragging = false
 var thumped = false
 
 var is_left = false
+var ballsize = 1.0
 
 onready var myworld = get_parent()
 
 func _ready():
 	GameEvents.connect("let_go", self, "_on_let_go")
+	pump()
+	
+func pump():
+	$Tween.interpolate_property($Sprite, "scale", Vector2(ballsize * 0.5, ballsize * 0.5), Vector2(ballsize, ballsize), 1.0, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+	$Tween.start()
 
 func _input(event):
 	if event.is_action_pressed("drag"):
@@ -30,6 +36,7 @@ func set_size(size:float):
 	$Sprite.scale = Vector2(size, size)
 	$CollisionShape2D.scale = Vector2(size, size)
 	mass = 5 * PI * size
+	ballsize = size
 
 func _on_let_go():
 	mode = RigidBody2D.MODE_RIGID
@@ -47,6 +54,6 @@ func _on_Ball_body_entered(body):
 		if not thumped:
 			$Thump.play()
 			thumped = true
-		GameEvents.emit_signal("touched_latte")
+			GameEvents.emit_signal("touched_latte")
 
 

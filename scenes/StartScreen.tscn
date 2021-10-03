@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://sprites/bg.png" type="Texture" id=1]
 [ext_resource path="res://ressources/PottaOne-Regular.ttf" type="DynamicFontData" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://sprites/circle.png" type="Texture" id=4]
 [ext_resource path="res://scenes/StartScreen.gd" type="Script" id=5]
 [ext_resource path="res://sounds/blop.wav" type="AudioStream" id=6]
+[ext_resource path="res://sounds/blip.wav" type="AudioStream" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -13,14 +14,17 @@ use_filter = true
 font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0.501961, 0.117647, 0.0588235, 1 )
+bg_color = Color( 0.623529, 0.262745, 0.0705882, 1 )
 
 [sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.623529, 0.262745, 0.0705882, 1 )
+bg_color = Color( 0.729412, 0.439216, 0.0823529, 1 )
 border_color = Color( 0.796078, 0.72549, 0.0901961, 1 )
 
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.501961, 0.117647, 0.0588235, 1 )
+
 [sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.352941, 0.0313726, 0.054902, 1 )
+bg_color = Color( 0.501961, 0.117647, 0.0588235, 1 )
 
 [sub_resource type="PhysicsMaterial" id=5]
 friction = 0.0
@@ -70,16 +74,20 @@ margin_right = 586.5
 margin_bottom = 487.835
 custom_styles/hover = SubResource( 2 )
 custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 10 )
 custom_styles/normal = SubResource( 4 )
 custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color_disabled = Color( 0.796078, 0.72549, 0.0901961, 1 )
 custom_colors/font_color = Color( 0.796078, 0.72549, 0.0901961, 1 )
+custom_colors/font_color_hover = Color( 0.796078, 0.72549, 0.0901961, 1 )
+custom_colors/font_color_pressed = Color( 0.796078, 0.72549, 0.0901961, 1 )
 text = "Start"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
-position = Vector2( 516.725, 205.059 )
+position = Vector2( 516.725, 268.699 )
 physics_material_override = SubResource( 5 )
 contacts_reported = 1
 contact_monitor = true
@@ -117,6 +125,9 @@ __meta__ = {
 
 [node name="Blop" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+
+[node name="Blip" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 [connection signal="body_entered" from="RigidBody2D" to="." method="_on_RigidBody2D_body_entered"]
